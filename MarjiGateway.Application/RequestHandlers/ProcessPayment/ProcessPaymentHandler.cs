@@ -1,13 +1,14 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
 
 namespace MarjiGateway.Application.RequestHandlers.ProcessPayment
 {
-    public class ProcessPaymentHandler
+    public class ProcessPaymentHandler : IRequestHandler<ProcessPayment, ProcessPaymentResponse>
     {
-        public Task Handle(ProcessPayment processPayment, CancellationToken cancellationToken)
+        public Task<ProcessPaymentResponse> Handle(ProcessPayment request, CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            return Task.FromResult(new ProcessPaymentResponse() {IsSuccess = true});
         }
     }
 }
