@@ -15,8 +15,8 @@ namespace MarjiGateway.Application.Validators
                 
             });
             RuleFor(payment => payment.Cvv).NotEmpty().Length(3);
-            RuleFor(payment => payment.ExpiryDay).InclusiveBetween(1, 31);
-            RuleFor(payment => payment.ExpiryYear).InclusiveBetween(1, 12);
+            RuleFor(payment => payment.ExpiryMonth).InclusiveBetween(1, 12);
+            RuleFor(payment => payment.ExpiryYear).InclusiveBetween(2020, 2100);
         }
     }
 }
