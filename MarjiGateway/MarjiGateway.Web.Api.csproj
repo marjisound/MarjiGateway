@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MarjiGateway.Adapters\MarjiGateway.Adapters.csproj" />
     <ProjectReference Include="..\MarjiGateway.Application\MarjiGateway.Application.csproj" />
   </ItemGroup>
 

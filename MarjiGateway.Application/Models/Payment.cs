@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace MarjiGateway.Application.Models
 {
@@ -10,9 +9,12 @@ namespace MarjiGateway.Application.Models
         public string CardNumber { get; set; }
 
         [Required]
+        [RegularExpression("^\\d{4}$", ErrorMessage = "Expiry year is not valid")]
+        [Range(2020, 2500)]
         public int ExpiryYear { get; set; }
 
         [Required]
+        [RegularExpression("^(0?[1-9]|1[012])$", ErrorMessage = "Expiry month is not valid")]
         public int ExpiryMonth { get; set; }
 
         [Required]
@@ -20,10 +22,10 @@ namespace MarjiGateway.Application.Models
         public string Amount { get; set; }
 
         [Required]
-        [DataType(DataType.Currency)]
-        public string Currency { get; set; }
+        public Currency Currency { get; set; }
 
         [Required]
+        [RegularExpression("^[0-9]{3,4}$", ErrorMessage = "cvv is not valid")]
         public string Cvv { get; set; }
     }
 }

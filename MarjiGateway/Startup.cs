@@ -2,6 +2,8 @@
 using FluentValidation.AspNetCore;
 using MarjiGateway.Application.Behaviours;
 using MarjiGateway.Application.RequestHandlers.ProcessPayment;
+using MarjiGateway.Application.Validators.Common;
+using MarjiGateway.Web.Api.Extensions;
 using MarjiGateway.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -30,10 +32,12 @@ namespace MarjiGateway.Web.Api
                     options.SuppressModelStateInvalidFilter = true;
                 })
                 .AddMediatR(typeof(ProcessPayment))
-                .AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
+                .AddServices()
+                //.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
                 .AddMvc(options =>
                 {
                     options.Filters.Add(typeof(GlobalHttpExceptionFilter));
+                    options.ModelBindingMessageProvider.SetValueIsInvalidAccessor(_ => $"Value of {_} is not valid");
                 })
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddFluentValidation(cfg =>
