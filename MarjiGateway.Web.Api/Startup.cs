@@ -38,10 +38,10 @@ namespace MarjiGateway.Web.Api
                 .AddServices()
                 .AddSwaggerGen(options =>
                 {
-                    options.SwaggerDoc("v3", new Info
+                    options.SwaggerDoc("v1", new Info
                     {
-                        Title = "Delivery Service Router API",
-                        Version = "v3"
+                        Title = "Marji Gateway API",
+                        Version = "v1"
                     });
                     options.OperationFilter<ExamplesOperationFilter>();
                 })
@@ -80,7 +80,7 @@ namespace MarjiGateway.Web.Api
                 .UseSwagger()
                 .UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v3/swagger.json", "Delivery Service Router API");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Marji Gateway API");
                 });
 
             var option = new RewriteOptions();

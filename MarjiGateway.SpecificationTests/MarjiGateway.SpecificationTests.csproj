@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MarjiGateway\MarjiGateway.Web.Api.csproj" />
+    <ProjectReference Include="..\MarjiGateway.Web.Api\MarjiGateway.Web.Api.csproj" />
   </ItemGroup>
 
 </Project>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.779
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarjiGateway.Web.Api", "MarjiGateway\MarjiGateway.Web.Api.csproj", "{3FC19D65-ED55-4D6F-93C9-79FE9FA45DA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarjiGateway.Web.Api", "MarjiGateway.Web.Api\MarjiGateway.Web.Api.csproj", "{3FC19D65-ED55-4D6F-93C9-79FE9FA45DA8}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D0636DE9-9190-40EF-BDC3-A303B424CB98} = {D0636DE9-9190-40EF-BDC3-A303B424CB98}
 	EndProjectSection
