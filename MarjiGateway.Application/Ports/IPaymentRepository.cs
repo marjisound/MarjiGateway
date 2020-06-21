@@ -6,7 +6,7 @@ namespace MarjiGateway.Application.Ports
 {
     public interface IPaymentRepository
     {
-        Task<Payment> CreateAsync(Payment payment, CancellationToken cancellationToken);
-        Task<Payment> GetAsync(string id, CancellationToken cancellationToken);
+        Task<PaymentEntity> CreateAsync(PaymentEntity payment, CancellationToken cancellationToken);
+        Task<PaymentEntity> GetAsync(string id, CancellationToken cancellationToken);
     }
 }

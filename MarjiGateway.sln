@@ -10,10 +10,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarjiGateway.Web.Api", "Mar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarjiGateway.Application", "MarjiGateway.Application\MarjiGateway.Application.csproj", "{D0636DE9-9190-40EF-BDC3-A303B424CB98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarjiGateway.Adapters", "MarjiGateway.Adapters\MarjiGateway.Adapters.csproj", "{CBC14874-7F1C-434B-B9F2-E5E6D40303E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MarjiGateway.Adapters", "MarjiGateway.Adapters\MarjiGateway.Adapters.csproj", "{CBC14874-7F1C-434B-B9F2-E5E6D40303E7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D0636DE9-9190-40EF-BDC3-A303B424CB98} = {D0636DE9-9190-40EF-BDC3-A303B424CB98}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FCB12214-6ED4-49AF-B43B-13915A393EC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarjiGateway.SpecificationTests", "MarjiGateway.SpecificationTests\MarjiGateway.SpecificationTests.csproj", "{57A8B6A8-A35A-47EB-A83C-77674620A691}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{CBC14874-7F1C-434B-B9F2-E5E6D40303E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBC14874-7F1C-434B-B9F2-E5E6D40303E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBC14874-7F1C-434B-B9F2-E5E6D40303E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57A8B6A8-A35A-47EB-A83C-77674620A691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57A8B6A8-A35A-47EB-A83C-77674620A691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57A8B6A8-A35A-47EB-A83C-77674620A691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57A8B6A8-A35A-47EB-A83C-77674620A691}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{57A8B6A8-A35A-47EB-A83C-77674620A691} = {FCB12214-6ED4-49AF-B43B-13915A393EC7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {438F3DCF-CC12-4E65-A3B7-B06713943B9A}

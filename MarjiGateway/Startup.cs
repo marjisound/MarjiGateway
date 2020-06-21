@@ -2,15 +2,18 @@
 using FluentValidation.AspNetCore;
 using MarjiGateway.Application.Behaviours;
 using MarjiGateway.Application.RequestHandlers.ProcessPayment;
-using MarjiGateway.Application.Validators.Common;
 using MarjiGateway.Web.Api.Extensions;
 using MarjiGateway.Web.Api.Filters;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Examples;
+using Swashbuckle.AspNetCore.Swagger;
+
 
 namespace MarjiGateway.Web.Api
 {
@@ -33,7 +36,15 @@ namespace MarjiGateway.Web.Api
                 })
                 .AddMediatR(typeof(ProcessPayment))
                 .AddServices()
-                //.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidatorBehavior<,>))
+                .AddSwaggerGen(options =>
+                {
+                    options.SwaggerDoc("v3", new Info
+                    {
+                        Title = "Delivery Service Router API",
+                        Version = "v3"
+                    });
+                    options.OperationFilter<ExamplesOperationFilter>();
+                })
                 .AddMvc(options =>
                 {
                     options.Filters.Add(typeof(GlobalHttpExceptionFilter));
@@ -46,21 +57,36 @@ namespace MarjiGateway.Web.Api
                 });
         }
 
+        protected virtual void UpdateServiceConfiguration(IServiceCollection services)
+        {
+            // this method allows us to selectively update our dependencies to support acceptance testing
+            // with the ASP.Net Core test server and, importantly, without having the Startup code
+        }
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseMvc();
+            if (!env.IsProduction())
+            {
+                ConfigureSwagger(app);
+            }
+        }
+
+        public void ConfigureSwagger(IApplicationBuilder app)
+        {
+            app
+                .UseSwagger()
+                .UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v3/swagger.json", "Delivery Service Router API");
+                });
+
+            var option = new RewriteOptions();
+            option.AddRedirect("^$", "swagger");
+
+            app.UseRewriter(option);
         }
     }
 }

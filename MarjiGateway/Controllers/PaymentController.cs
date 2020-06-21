@@ -1,18 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MarjiGateway.Application.Exceptions;
 using MarjiGateway.Application.Models;
 using MarjiGateway.Application.RequestHandlers.ProcessPayment;
 using MarjiGateway.Web.Api.Models;
+using MarjiGateway.Web.Api.Swagger.Examples;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Examples;
 
 namespace MarjiGateway.Web.Api.Controllers
 {
-    [Route("marjigateway/v1/payment")]
+    [AllowAnonymous]
     [Produces("application/json")]
     [ApiController]
     public class PaymentController : ControllerBase
@@ -24,6 +29,10 @@ namespace MarjiGateway.Web.Api.Controllers
             _mediator = mediator;
         }
 
+        [ProducesResponseType(typeof(ProcessPaymentResponse), (int)HttpStatusCode.OK)]
+        [SwaggerRequestExample(typeof(PaymentRequest), typeof(ProcessPaymentExample))]
+        [SwaggerOperation("processPayment")]
+        [Route("marjigateway/v1/payment/processpayment")]
         [HttpPost]
         public async Task<ProcessPaymentResponse> ProcessPayment([FromBody] PaymentRequest request, CancellationToken cancellationToken)
         {

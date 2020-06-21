@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using MarjiGateway.Adapters.BankAdapters;
 using MarjiGateway.Adapters.BankFinder;
+using MarjiGateway.Adapters.Repositories;
 using MarjiGateway.Application.Ports;
 using MarjiGateway.Application.Providers;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace MarjiGateway.Web.Api.Extensions
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
             return serviceCollection
+                .AddRepositories()
                 .AddBankFinder()
                 .AddHsbc()
                 .AddSingleton<IBankProviderFactory, BankProviderFactory>(collection =>
@@ -36,6 +38,13 @@ namespace MarjiGateway.Web.Api.Extensions
             this IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<HsbcBankAdapter>();
+            return serviceCollection;
+        }
+
+        public static IServiceCollection AddRepositories(
+            this IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddSingleton<IPaymentRepository, PaymentRepository>();
             return serviceCollection;
         }
     }

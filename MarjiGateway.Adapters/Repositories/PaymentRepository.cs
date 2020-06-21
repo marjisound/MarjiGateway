@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using MarjiGateway.Application.Models;
 using MarjiGateway.Application.Ports;
@@ -8,17 +9,33 @@ namespace MarjiGateway.Adapters.Repositories
 {
     public class PaymentRepository : IPaymentRepository
     {
-        public Task<Payment> CreateAsync(Payment payment, CancellationToken cancellationToken)
-        {
-            var json = JsonConvert.SerializeObject(payment);
-            //var fileName = payment.
+        private readonly string _path;
 
-            throw new System.NotImplementedException();
+        public PaymentRepository()
+        {
+            var projectBin = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly()?.Location);
+            _path = projectBin + "\\Storage";
+            Directory.CreateDirectory(_path);
         }
 
-        public Task<Payment> GetAsync(string id, CancellationToken cancellationToken)
+        public Task<PaymentEntity> CreateAsync(PaymentEntity payment, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var json = JsonConvert.SerializeObject(payment);
+
+            var fileName = payment.Identifier + ".json";
+            var fullPath = _path + "\\" + fileName;
+            File.WriteAllText(fullPath, json);
+
+            return Task.FromResult(payment);
+        }
+
+        public Task<PaymentEntity> GetAsync(string id, CancellationToken cancellationToken)
+        {
+            var fileName = id + ".json";
+            var resultStr = File.ReadAllText(_path + fileName);
+            var result = JsonConvert.DeserializeObject<PaymentEntity>(resultStr);
+
+            return Task.FromResult(result);
         }
     }
 }
