@@ -1,4 +1,7 @@
-﻿namespace MarjiGateway.Application.Models
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace MarjiGateway.Application.Models
 {
     public class ErrorModel
     {
@@ -8,6 +11,7 @@
 
         public string ParameterName { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ErrorLevelModel Level { get; set; }
     }
 

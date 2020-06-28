@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using MarjiGateway.Application.Exceptions;
 using MarjiGateway.Application.Models;
 using MarjiGateway.Application.Ports;
 using Newtonsoft.Json;
@@ -32,10 +33,18 @@ namespace MarjiGateway.Adapters.Repositories
         public Task<PaymentEntity> GetAsync(string id, CancellationToken cancellationToken)
         {
             var fileName = id + ".json";
-            var resultStr = File.ReadAllText(_path + fileName);
-            var result = JsonConvert.DeserializeObject<PaymentEntity>(resultStr);
+            var fullPath = _path + "\\" + fileName;
+            try
+            {
+                var resultStr = File.ReadAllText(fullPath);
+                var result = JsonConvert.DeserializeObject<PaymentEntity>(resultStr);
 
-            return Task.FromResult(result);
+                return Task.FromResult(result);
+            }
+            catch (FileNotFoundException e)
+            {
+                throw new ApplicationValidationException("Payment is not found.");
+            }
         }
     }
 }

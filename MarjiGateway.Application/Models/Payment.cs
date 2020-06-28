@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MarjiGateway.Application.Models
 {
-    public class Payment
+    public class Payment : IValidatableObject
     {
         [Required]
         [CreditCard]
@@ -10,7 +12,6 @@ namespace MarjiGateway.Application.Models
 
         [Required]
         [RegularExpression("^\\d{4}$", ErrorMessage = "Expiry year is not valid")]
-        [Range(2020, 2500)]
         public int ExpiryYear { get; set; }
 
         [Required]
@@ -22,10 +23,34 @@ namespace MarjiGateway.Application.Models
         public string Amount { get; set; }
 
         [Required]
-        public Currency Currency { get; set; }
+        public string Currency { get; set; }
 
         [Required]
         [RegularExpression("^[0-9]{3,4}$", ErrorMessage = "cvv is not valid")]
         public string Cvv { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (!Constants.CurrencyTypes.Contains(Currency.ToUpper()))
+            {
+                yield return new ValidationResult(
+                    $"Currency is not valid. Only following currencies are supported {string.Join(",", Constants.CurrencyTypes)}",
+                    new[] { nameof(Currency) });
+            }
+
+            if (ExpiryYear < DateTime.Now.Year)
+            {
+                yield return new ValidationResult(
+                    $"Expiry year must be greater than or equal to {DateTime.Now.Year}",
+                    new[] { nameof(ExpiryYear) });
+            }
+
+            if (ExpiryYear == DateTime.Now.Year && ExpiryMonth < DateTime.Now.Month)
+            {
+                yield return new ValidationResult(
+                    $"Expiry month must be greater than or equal to {DateTime.Now.Month}",
+                    new[] { nameof(ExpiryMonth) });
+            }
+        }
     }
 }

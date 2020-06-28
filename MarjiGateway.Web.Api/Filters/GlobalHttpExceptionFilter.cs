@@ -15,13 +15,28 @@ namespace MarjiGateway.Web.Api.Filters
             {
                 SetErrorModel(context, HttpStatusCode.BadRequest, exception.Errors); 
             }
+            else if (context.Exception is ApplicationValidationException validationException)
+            {
+                SetErrorModel(
+                    context,
+                    HttpStatusCode.BadRequest,
+                    new List<ErrorModel>(){new ErrorModel(){ErrorMessage = validationException.Message, ErrorCode = "ValidationError"}});
+            }
+            else if (context.Exception is ApplicationOperationException operationException)
+            {
+                SetErrorModel(
+                    context,
+                    HttpStatusCode.InternalServerError,
+                    new List<ErrorModel>() { new ErrorModel() { ErrorMessage = operationException.Message, ErrorCode = "OperationError" } });
+            }
             else
             {
                 var errors = new[]
                 {
                     new ErrorModel()
                     {
-                        ErrorMessage = context.Exception.Message,
+                        ErrorCode = "UnhandledError",
+                        ErrorMessage = "Unhandled error occured.",
                         Level = ErrorLevelModel.Error
                     }
                 };

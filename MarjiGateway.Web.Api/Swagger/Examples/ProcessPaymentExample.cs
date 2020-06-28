@@ -15,7 +15,7 @@ namespace MarjiGateway.Web.Api.Swagger.Examples
                     Amount = "100",
                     CardNumber = "4242424242424242",
                     Cvv = "434",
-                    Currency = Currency.Eur,
+                    Currency = "EUR",
                     ExpiryMonth = 3,
                     ExpiryYear = 2021
                 }

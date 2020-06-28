@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using MarjiGateway.Application.Exceptions;
 using MarjiGateway.Application.Models;
+using MarjiGateway.Application.RequestHandlers.GetPayment;
 using MarjiGateway.Application.RequestHandlers.ProcessPayment;
 using MarjiGateway.Web.Api.Models;
 using MarjiGateway.Web.Api.Swagger.Examples;
@@ -32,7 +34,7 @@ namespace MarjiGateway.Web.Api.Controllers
         [ProducesResponseType(typeof(ProcessPaymentResponse), (int)HttpStatusCode.OK)]
         [SwaggerRequestExample(typeof(PaymentRequest), typeof(ProcessPaymentExample))]
         [SwaggerOperation("processPayment")]
-        [Route("marjigateway/v1/payment/processpayment")]
+        [Route("marjigateway/v1/payment")]
         [HttpPost]
         public async Task<ProcessPaymentResponse> ProcessPayment([FromBody] PaymentRequest request, CancellationToken cancellationToken)
         {
@@ -41,6 +43,20 @@ namespace MarjiGateway.Web.Api.Controllers
                 throw new ModelValidationException(CreateErrorMessage(ModelState));
             }
             return await _mediator.Send(new ProcessPayment {Payment = request.Payment}, cancellationToken);
+        }
+
+        [ProducesResponseType(typeof(GetPaymentResponse), (int)HttpStatusCode.OK)]
+        [SwaggerRequestExample(typeof(GetPaymentQuery), typeof(GetPaymentQueryExample))]
+        [SwaggerOperation("processPayment")]
+        [Route("marjigateway/v1/payment")]
+        [HttpGet]
+        public async Task<GetPaymentResponse> GetPayment([Required]string identifier, CancellationToken cancellationToken)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelValidationException(CreateErrorMessage(ModelState));
+            }
+            return await _mediator.Send(new GetPaymentQuery(){Identifier = identifier}, cancellationToken);
         }
 
         private IEnumerable<ErrorModel> CreateErrorMessage(ModelStateDictionary modelState)

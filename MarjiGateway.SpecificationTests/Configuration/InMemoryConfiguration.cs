@@ -1,5 +1,8 @@
 ﻿using System;
 using BoDi;
+using MarjiGateway.SpecificationTests.Facads;
+using MarjiGateway.SpecificationTests.Steps;
+using Swagger;
 
 namespace MarjiGateway.SpecificationTests.Configuration
 {
@@ -7,8 +10,13 @@ namespace MarjiGateway.SpecificationTests.Configuration
     {
         public InMemoryConfiguration()
         {
-            var container = new ObjectContainer();
+            var container = CreateContainer();
+            BankAdapteSteps = container.Resolve<AdapterSetUpSteps>();
+            CreatePaymentSteps = container.Resolve<CreatePaymentSteps>();
         }
+
+        public AdapterSetUpSteps BankAdapteSteps { get; set; }
+        public CreatePaymentSteps CreatePaymentSteps { get; set; }
 
         private ObjectContainer CreateContainer()
         {
@@ -16,6 +24,14 @@ namespace MarjiGateway.SpecificationTests.Configuration
             var baseUri = new Uri("http://localhost");
 
             container.RegisterInstanceAs<InMemoryTestServer>(new InMemoryTestServer(container));
+
+            container.RegisterInstanceAs<IMarjiGatewayAPI>(
+                new TestAPI(
+                    baseUri, 
+                    container.Resolve<InMemoryTestServer>().GetHandler(),
+                    container.Resolve<InMemoryTestServer>().GetHttpClient()));
+
+            container.RegisterInstanceAs(new MarjiGatewayApiFacade(container.Resolve<IMarjiGatewayAPI>()));
 
             return container;
         }

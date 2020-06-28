@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-using FluentValidation.AspNetCore;
-using MarjiGateway.Application.Behaviours;
+﻿using FluentValidation.AspNetCore;
 using MarjiGateway.Application.RequestHandlers.ProcessPayment;
 using MarjiGateway.Web.Api.Extensions;
 using MarjiGateway.Web.Api.Filters;
@@ -55,6 +53,8 @@ namespace MarjiGateway.Web.Api
                 {
                     cfg.RegisterValidatorsFromAssemblyContaining<ProcessPayment>();
                 });
+
+            UpdateServiceConfiguration(services);
         }
 
         protected virtual void UpdateServiceConfiguration(IServiceCollection services)

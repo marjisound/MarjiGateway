@@ -4,6 +4,7 @@ using MarjiGateway.Adapters.BankFinder;
 using MarjiGateway.Adapters.Repositories;
 using MarjiGateway.Application.Ports;
 using MarjiGateway.Application.Providers;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MarjiGateway.Web.Api.Extensions
@@ -12,6 +13,12 @@ namespace MarjiGateway.Web.Api.Extensions
     {
         public static IServiceCollection AddServices(this IServiceCollection serviceCollection)
         {
+            serviceCollection.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            });
+
             return serviceCollection
                 .AddRepositories()
                 .AddBankFinder()
@@ -20,7 +27,7 @@ namespace MarjiGateway.Web.Api.Extensions
                 {
                     var banks = new Dictionary<string, IBankAdapter>()
                     {
-                        ["Hsbc"] = collection.GetRequiredService<HsbcBankAdapter>()
+                        ["hsbc"] = collection.GetRequiredService<HsbcBankAdapter>()
                     };
 
                     return new BankProviderFactory(banks);

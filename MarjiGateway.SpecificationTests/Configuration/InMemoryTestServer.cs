@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Reflection;
 using BoDi;
+using MarjiGateway.SpecificationTests.Clients;
 using MarjiGateway.Web.Api;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
@@ -25,6 +26,7 @@ namespace MarjiGateway.SpecificationTests.Configuration
 
             webHostBuilder.UseConfiguration(configuration)
                 .ConfigureServices(x => x.AddSingleton<IObjectContainer>(serviceProvider => container))
+                .UseStartup<TestStartUp>()
                 .UseSetting(WebHostDefaults.ApplicationKey, typeof(Program).GetTypeInfo().Assembly.FullName);
 
             TestServer = new TestServer(webHostBuilder);

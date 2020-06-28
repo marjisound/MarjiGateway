@@ -7,7 +7,7 @@ namespace MarjiGateway.Adapters.BankFinder
     {
         public Task<string> FindBank(string creditCardNumber)
         {
-            return Task.FromResult("Hsbc");
+            return Task.FromResult("hsbc");
         }
 
         public Task HealthcheckAsync()
