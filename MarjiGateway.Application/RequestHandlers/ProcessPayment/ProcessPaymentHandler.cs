@@ -34,6 +34,7 @@ namespace MarjiGateway.Application.RequestHandlers.ProcessPayment
         {
             return new PaymentEntity()
             {
+                Name = request.Name,
                 Amount = request.Amount,
                 CardNumber = request.CardNumber,
                 Currency = request.Currency,

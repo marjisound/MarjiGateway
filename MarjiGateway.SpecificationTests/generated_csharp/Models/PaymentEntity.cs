@@ -10,21 +10,24 @@ namespace Swagger.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class Payment
+    public partial class PaymentEntity
     {
         /// <summary>
-        /// Initializes a new instance of the Payment class.
+        /// Initializes a new instance of the PaymentEntity class.
         /// </summary>
-        public Payment()
+        public PaymentEntity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Payment class.
+        /// Initializes a new instance of the PaymentEntity class.
         /// </summary>
-        public Payment(string name, string cardNumber, int expiryYear, int expiryMonth, string amount, string currency, string cvv)
+        public PaymentEntity(string name, string cardNumber, int expiryYear, int expiryMonth, string amount, string currency, string cvv, string identifier = default(string), System.DateTime? created = default(System.DateTime?), int? status = default(int?))
         {
+            Identifier = identifier;
+            Created = created;
+            Status = status;
             Name = name;
             CardNumber = cardNumber;
             ExpiryYear = expiryYear;
@@ -39,6 +42,21 @@ namespace Swagger.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identifier")]
+        public string Identifier { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "created")]
+        public System.DateTime? Created { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public int? Status { get; set; }
 
         /// <summary>
         /// </summary>

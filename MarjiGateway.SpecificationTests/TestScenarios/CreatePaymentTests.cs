@@ -33,7 +33,7 @@ namespace MarjiGateway.SpecificationTests.TestScenarios
                 .And(_ => _adapterSetUpSteps.BankFinderReturns("halifax"))
                 .When(_ => _createPaymentSteps.UserRequestsCreatePaymentWith(
                     new PaymentRequest(
-                        new Payment("4242424242424242", 2021, 2, "254", "EUR", "678"))))
+                        new Payment("Mary Kalan","4242424242424242", 2021, 2, "254", "EUR", "678"))))
                 .Then(_ => _createPaymentSteps.TheHttpStatusCodeResponseShouldBe(HttpStatusCode.OK))
                 .And(_ => _createPaymentSteps.TheResponseShouldBe(new Swagger.Models.ProcessPaymentResponse(){IsSuccess = true, Identifier = expectedIdentifier }))
                 .BDDfy();
@@ -58,10 +58,10 @@ namespace MarjiGateway.SpecificationTests.TestScenarios
         {
             yield return new TestCaseData(
                 new List<ErrorModel>(){new ErrorModel(){ErrorMessage = "The CardNumber field is not a valid credit card number.", ErrorCode = "ModelValidationError", ParameterName = "Payment.CardNumber" }},
-                new Payment("57289797915i8797", 2021, 2, "254", "EUR", "678"));
+                new Payment("Mary Kalan", "57289797915i8797", 2021, 2, "254", "EUR", "678"));
             yield return new TestCaseData(
                 new List<ErrorModel>() { new ErrorModel() { ErrorMessage = "Expiry year must be greater than or equal to 2020", ErrorCode = "ModelValidationError", ParameterName = "Payment.ExpiryYear" } },
-                new Payment("4242424242424242", 2019, 2, "254", "EUR", "678"));
+                new Payment("Mary Kalan", "4242424242424242", 2019, 2, "254", "EUR", "678"));
         }
     }
 }

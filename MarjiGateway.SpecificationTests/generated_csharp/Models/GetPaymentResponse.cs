@@ -6,24 +6,23 @@
 
 namespace Swagger.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class PaymentRequest
+    public partial class GetPaymentResponse
     {
         /// <summary>
-        /// Initializes a new instance of the PaymentRequest class.
+        /// Initializes a new instance of the GetPaymentResponse class.
         /// </summary>
-        public PaymentRequest()
+        public GetPaymentResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PaymentRequest class.
+        /// Initializes a new instance of the GetPaymentResponse class.
         /// </summary>
-        public PaymentRequest(Payment payment)
+        public GetPaymentResponse(PaymentEntity payment = default(PaymentEntity))
         {
             Payment = payment;
             CustomInit();
@@ -37,12 +36,12 @@ namespace Swagger.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "payment")]
-        public Payment Payment { get; set; }
+        public PaymentEntity Payment { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

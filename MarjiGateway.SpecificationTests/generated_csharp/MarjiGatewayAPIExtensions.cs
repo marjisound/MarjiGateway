@@ -18,6 +18,32 @@ namespace Swagger
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='identifier'>
+            /// </param>
+            public static GetPaymentResponse GetPayment(this IMarjiGatewayAPI operations, string identifier)
+            {
+                return operations.GetPaymentAsync(identifier).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='identifier'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<GetPaymentResponse> GetPaymentAsync(this IMarjiGatewayAPI operations, string identifier, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPaymentWithHttpMessagesAsync(identifier, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='request'>
             /// </param>
             public static ProcessPaymentResponse ProcessPayment(this IMarjiGatewayAPI operations, PaymentRequest request = default(PaymentRequest))

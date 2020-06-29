@@ -7,6 +7,10 @@ namespace MarjiGateway.Application.Models
     public class Payment : IValidatableObject
     {
         [Required]
+        [StringLength(100, ErrorMessage = "Name can not be more than 100 characters")]
+        public string Name { get; set; }
+
+        [Required]
         [CreditCard]
         public string CardNumber { get; set; }
 

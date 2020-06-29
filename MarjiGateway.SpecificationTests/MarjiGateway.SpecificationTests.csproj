@@ -36,8 +36,4 @@
     <ProjectReference Include="..\MarjiGateway.Web.Api\MarjiGateway.Web.Api.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="generated_csharp\Models\" />
-  </ItemGroup>
-
 </Project>
